@@ -20,7 +20,12 @@ const projectSchema = new mongoose.Schema({
         //TODO: colocas as áreas de conhecimento
         enum: ['opcaoA', 'opcaoB'],
         required: true
-      }
+      },
+      image: {
+        type: String,
+        //TODO: definir imagem default
+        default: url_bonequinho
+      },
   },
   {
     timestamps: true
