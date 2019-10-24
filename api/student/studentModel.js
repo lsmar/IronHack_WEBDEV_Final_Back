@@ -14,10 +14,12 @@ const studentSchema = new mongoose.Schema({
     //TODO: definir imagem default
     default: url_bonequinho
   },
+  //* Série
   class: {
     type: String, required: true
   },
-  subClass: {
+  //* Turma
+  grade: {
     type: String,
     required: true
   },
