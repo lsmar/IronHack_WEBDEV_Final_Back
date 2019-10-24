@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require('cors')
 
 const app = express();
 
@@ -19,6 +20,8 @@ mongoose
   .catch(err => {
     console.error("Error connecting to mongo", err);
   });
+
+app.use(cors());
 
 //* Body parser middleware
 app.use(bodyParser.json());
