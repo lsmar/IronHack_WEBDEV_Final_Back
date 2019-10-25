@@ -14,7 +14,8 @@ const userSchema = new Schema(
       enum: ["COORDINATOR", "TEACHER"],
       default: "TEACHER"
     },
-    thumbnail: String
+    thumbnail: String,
+    token: String
     // googleID: String,
     // facebookID: String,
   },
