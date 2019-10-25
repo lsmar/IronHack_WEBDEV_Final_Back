@@ -30,8 +30,8 @@ exports.getAll = (req, res, next) => {
 //* Create One
 exports.createOne = (req, res, next) => {
   const { name, teachers, students, description, subjects, image } = req.body;
-  const { institution } = req.user;
-  const newProject = new ProjectModel({ name, email, role, institution, token });
+  // const newProject = new ProjectModel({ name, email, role, institution, token });
+  const newProject = new ProjectModel({  name, teachers, students, description, subjects, image });
   newProject
     .save()
     .then(project => {
