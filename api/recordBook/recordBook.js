@@ -14,6 +14,11 @@ const recordBookSchema = new mongoose.Schema({
         type: [String],
         //TODO: definir as tags padronizadas
         enum: ['opcaoA', 'opcaoB'],
+        image: {
+          type: String,
+          //TODO: definir imagem default
+          default: url_bonequinho
+        },
         required: true
       }
   },
