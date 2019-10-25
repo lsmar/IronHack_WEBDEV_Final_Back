@@ -6,10 +6,10 @@ const projectSchema = new mongoose.Schema({
         required: true,
         unique: true
       },
-      teachers: {
+      teachers: [{
         type: Schema.Types.ObjectId,
         required: true
-      },
+      }],
       students: {
         type: Schema.Types.ObjectId,
         required: true

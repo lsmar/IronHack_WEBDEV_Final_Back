@@ -49,6 +49,10 @@ app.use("/auth", authRoutes);
 const userRoutes = require("./api/user/userRoutes");
 app.use("/user", userRoutes);
 
+//* Project Routes
+const projectRoutes = require("./api/project/projectRoutes");
+app.use("/project", projectRoutes);
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
 });
