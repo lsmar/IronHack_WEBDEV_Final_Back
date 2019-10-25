@@ -1,6 +1,7 @@
 const UserModel = require("./userModel");
 const randomString = require("randomstring");
 const base64 = require("base-64");
+const nodemailer = require("nodemailer");
 
 exports.paramId = (req, res, next, id) => {
   UserModel.findById(id)
@@ -35,7 +36,8 @@ exports.createOne = (req, res, next) => {
   newUser
     .save()
     .then(user => {
-      //TODO Send the email for the new user
+      const { name, email, token } = user;
+      sendNewUserEmail({ name, email, token });
       res.json(user);
     })
     .catch(err => next(err));
@@ -68,4 +70,24 @@ exports.changePass = (req, res, next) => {
   UserModel.findOneAndUpdate({ token }, { token: undefined, password })
     .then(user => res.json({ success: true }))
     .catch(err => next(err));
+};
+
+const sendNewUserEmail = ({ token, email, name }) => {
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "lynx.edu7@gmail.com",
+      pass: process.env.GMAIL_PASS
+    }
+  });
+  transporter
+    .sendMail({
+      from: '"The Best Edu system" <lynx.edu7@gmail.com>',
+      to: email,
+      subject: "Bem vindo!",
+      text: "Incrível seja bem vindo!",
+      html: `<b>Incrível, ${name} seja bem vindo(a)!</b><h1><a href="${process.env.FRONT_URL}/newUser/${token}">Registre sua senha</a>  </h1>`
+    })
+    .then(info => console.log(info))
+    .catch(error => console.log(error));
 };
