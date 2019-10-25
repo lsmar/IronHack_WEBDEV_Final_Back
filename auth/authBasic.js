@@ -65,7 +65,8 @@ exports.verifyUser = () => (req, res, next) => {
           .then(result => {
             if (result) {
               //* Password ok, can continue
-              req.user = user;
+              const { name, institution, email, role, _id } = user;
+              req.user = { name, institution, email, role, _id };
               next();
             } else {
               //! Senha não confere
