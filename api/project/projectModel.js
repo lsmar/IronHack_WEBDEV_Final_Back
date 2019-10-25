@@ -17,8 +17,8 @@ const projectSchema = new mongoose.Schema({
       description: String,
       subjects: {
         type: [String],
-        //TODO: colocas as áreas de conhecimento
-        enum: ['opcaoA', 'opcaoB'],
+        //Linguagens Matemática Ciências da Natureza Ciências Humanas e Sociais Aplicadas
+        enum: ['linguagens', 'math', 'natureza', 'humanas'],
         required: true
       },
       image: {
