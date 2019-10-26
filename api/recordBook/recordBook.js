@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const recordBookSchema = new mongoose.Schema({
       project: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
       },
       students: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
       },
       description: String,

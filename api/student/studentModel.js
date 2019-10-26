@@ -6,13 +6,13 @@ const studentSchema = new mongoose.Schema({
     required: true
   },
   project: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
   image: {
     type: String,
     //TODO: definir imagem default
-    default: url_bonequinho
+    default: "url_bonequinho"
   },
   //* Série
   class: {
@@ -27,7 +27,7 @@ const studentSchema = new mongoose.Schema({
     Number
   },
   institution: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
 

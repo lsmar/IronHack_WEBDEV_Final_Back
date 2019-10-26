@@ -3,30 +3,30 @@ const mongoose = require('mongoose');
 const projectSchema = new mongoose.Schema({
       name: {
         type: String,
-        // required: true,
+        required: true,
         unique: true
       },
       teachers: [{
-        // type: Schema.Types.ObjectId,
-        type: String,
-        // required: true
+        type: mongoose.Schema.Types.ObjectId,
+        // type: String,
+        required: true
       }],
       students: [{
-        // type: Schema.Types.ObjectId,
-        type: String,
-        // required: true
+        type: mongoose.Schema.Types.ObjectId,
+        // type: String,
+        required: true
       }],
       description: String,
       subjects: {
         type: [String],
         //Linguagens Matemática Ciências da Natureza Ciências Humanas e Sociais Aplicadas
         enum: ['linguagens', 'math', 'natureza', 'humanas'],
-        // required: true
+        required: true
       },
       image: {
         type: String,
         //TODO: definir imagem default
-        default: url_bonequinho
+        default: "url_bonequinho"
       },
   },
   {

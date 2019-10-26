@@ -8,18 +8,16 @@ checkUser = function(role) {
 };
 
 //* Get id from routes
-router.param("id", controller.paramId);  //can get project id?
+router.param("id", controller.paramId); 
 
 //* Get All
-router.get("/", checkUser(), controller.getAll);
+router.get("/", controller.getAll);
 
 //* Get teacher`s projects
 router.get("/my", checkUser(), controller.getMy);
 
 //* Create One
 router.post("/", controller.createOne);
-// router.post("/", checkUser(), controller.createOne);
-
 
 //* Get One
 router.get("/:id", checkUser(), controller.getOne);

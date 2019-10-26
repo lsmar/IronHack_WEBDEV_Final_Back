@@ -11,7 +11,7 @@ exports.paramId = (req, res, next, id) => {
 
 //* Get teacher`s projects
 exports.getMy = (req, res, next) => {
-  ProjectModel.find({ institution: req.user.institution, teachers:req.user._id })
+  ProjectModel.find({teachers:{$in:req.user._id }})
     .then(projects => {
       res.json(projects);
     })
@@ -20,7 +20,7 @@ exports.getMy = (req, res, next) => {
 
 //* Get All projects
 exports.getAll = (req, res, next) => {
-  ProjectModel.find({ institution: req.user.institution })
+  ProjectModel.find()
     .then(users => {
       res.json(users);
     })
@@ -50,16 +50,19 @@ exports.getOne = (req, res, next) => {
 
 //* Edit One
 exports.editOne = (req, res, next) => {
-  req.userEdit
-    .update(req.body)
-    .then(user => res.json(user))
+  const { name, teachers, students, description, subjects, image } = req.body;
+  ProjectModel
+    .findByIdAndUpdate({ _id: req.body.id },{ name, teachers, students, description, subjects, image })
+    .then(project => {
+      res.json(project);
+    })
     .catch(err => next(err));
 };
 
 //* Delete One
 exports.deleteOne = (req, res, next) => {
-  req.userEdit
-    .delete()
+  ProjectModel
+    .findByIdAndDelete({ _id: req.body.id })
     .then(user => res.json(user))
     .catch(err => next(err));
 };
