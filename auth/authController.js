@@ -20,11 +20,11 @@ exports.hasRole = role => (req, res, next) => {
 exports.signup = (req, res, next) => {
   //* Create institution then create the user
   //* Error if institution exists
-  const { name, institution, email, password } = req.body;
+  const { name, institution, email, password, role } = req.body;
   const Institution = new InstitutionModel({ name: institution });
   Institution.save()
     .then(newInstitution => {
-      const User = new UserModel({ name, email, password, institution: newInstitution._id });
+      const User = new UserModel({ name, email, password, role, institution: newInstitution._id });
       User.save()
         .then(newUser => {
           const token = signToken(newUser._id, newUser.email, newUser.name, newUser.thumbnail, newUser.role, newUser.institution);
