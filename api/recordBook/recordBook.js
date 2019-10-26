@@ -17,7 +17,7 @@ const recordBookSchema = new mongoose.Schema({
         image: {
           type: String,
           //TODO: definir imagem default
-          default: url_bonequinho
+          default: "url_bonequinho"
         },
         required: true
       }
