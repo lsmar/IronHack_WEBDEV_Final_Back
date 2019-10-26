@@ -27,9 +27,30 @@ exports.signup = (req, res, next) => {
       User.save()
         .then(newUser => {
           const token = signToken(newUser._id, newUser.email, newUser.name, newUser.thumbnail, newUser.role, newUser.institution);
+          sendNewUserEmail({ name, email});
           res.json({ token });
         })
         .catch(err => next(err));
     })
     .catch(err => next(err));
+};
+
+const sendNewUserEmail = ({email, name }) => {
+  let transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "lynx.edu7@gmail.com",
+      pass: process.env.GMAIL_PASS
+    }
+  });
+  transporter
+    .sendMail({
+      from: '"The Best Edu system" <lynx.edu7@gmail.com>',
+      to: email,
+      subject: "Bem vindo!",
+      text: "Incrível seja bem vindo!",
+      html: `<b>Incrível, ${name} seja bem vindo(a)!`
+    })
+    .then(info => console.log(info))
+    .catch(error => console.log(error));
 };

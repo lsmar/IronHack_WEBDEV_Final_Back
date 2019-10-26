@@ -27,7 +27,7 @@ exports.getAll = (req, res, next) => {
     .catch(err => next(err));
 };
 
-//* Create One
+//* Create One 
 exports.createOne = (req, res, next) => {
   const { name, email, role } = req.body;
   const { institution } = req.user;
@@ -72,6 +72,7 @@ exports.changePass = (req, res, next) => {
     .catch(err => next(err));
 };
 
+//* Send email with link to create a password
 const sendNewUserEmail = ({ token, email, name }) => {
   let transporter = nodemailer.createTransport({
     service: "Gmail",
