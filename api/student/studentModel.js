@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
   name: {
@@ -6,7 +6,7 @@ const studentSchema = new mongoose.Schema({
     required: true
   },
   project: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true
   },
   image: {
@@ -16,23 +16,21 @@ const studentSchema = new mongoose.Schema({
   },
   //* Série
   class: {
-    type: String, required: true
+    type: String,
+    required: true
   },
   //* Turma
   grade: {
     type: String,
     required: true
   },
-  classNumber: {
-    Number
-  },
+  classNumber: Number,
   institution: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true
-  },
-
+  }
 }, {
   timestamps: true
 });
 
-module.exports = mongoose.model('Student', studentSchema);
+module.exports = mongoose.model("Student", studentSchema);
