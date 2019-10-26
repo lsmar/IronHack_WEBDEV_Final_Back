@@ -1,6 +1,7 @@
 const UserModel = require("../api/user/userModel");
 const InstitutionModel = require("../api/institution/institutionModel");
 const { signToken } = require("./authBasic");
+const nodemailer = require("nodemailer");
 
 exports.signin = (req, res, next) => {
   //* Check if the username and password are correct, if yes send the token
