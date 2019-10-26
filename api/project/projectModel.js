@@ -8,12 +8,12 @@ const projectSchema = new mongoose.Schema({
       },
       teachers: [{
         type: mongoose.Schema.Types.ObjectId,
-        // type: String,
+        ref     : 'User',
         required: true
       }],
       students: [{
         type: mongoose.Schema.Types.ObjectId,
-        // type: String,
+        ref     : 'Student',
         required: true
       }],
       description: String,
