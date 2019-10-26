@@ -11,7 +11,13 @@ exports.paramId = (req, res, next, id) => {
 
 //* Get teacher`s projects
 exports.getMy = (req, res, next) => {
-  ProjectModel.find({teachers:{$in:req.user._id }})
+  ProjectModel.find({
+      teachers: {
+        $in: req.user._id
+      }
+    })
+    .populate('teachers', 'name')
+    .populate('students')
     .then(projects => {
       res.json(projects);
     })
@@ -21,6 +27,8 @@ exports.getMy = (req, res, next) => {
 //* Get All projects
 exports.getAll = (req, res, next) => {
   ProjectModel.find()
+    .populate('teachers', 'name')
+    .populate('students')
     .then(users => {
       res.json(users);
     })
@@ -29,8 +37,22 @@ exports.getAll = (req, res, next) => {
 
 //* Create One
 exports.createOne = (req, res, next) => {
-  const { name, teachers, students, description, subjects, image } = req.body;
-  const newProject = new ProjectModel({  name, teachers, students, description, subjects, image });
+  const {
+    name,
+    teachers,
+    students,
+    description,
+    subjects,
+    image
+  } = req.body;
+  const newProject = new ProjectModel({
+    name,
+    teachers,
+    students,
+    description,
+    subjects,
+    image
+  });
   newProject
     .save()
     .then(project => {
@@ -41,7 +63,12 @@ exports.createOne = (req, res, next) => {
 
 //* Get One
 exports.getOne = (req, res, next) => {
-  ProjectModel.findById({ _id: req.body.id })
+  ProjectModel
+    .findById({
+      _id: req.body.id
+    })
+    .populate('teachers', 'name')
+    .populate('students')
     .then(project => {
       res.json(project);
     })
@@ -50,9 +77,25 @@ exports.getOne = (req, res, next) => {
 
 //* Edit One
 exports.editOne = (req, res, next) => {
-  const { name, teachers, students, description, subjects, image } = req.body;
+  const {
+    name,
+    teachers,
+    students,
+    description,
+    subjects,
+    image
+  } = req.body;
   ProjectModel
-    .findByIdAndUpdate({ _id: req.body.id },{ name, teachers, students, description, subjects, image })
+    .findByIdAndUpdate({
+      _id: req.body.id
+    }, {
+      name,
+      teachers,
+      students,
+      description,
+      subjects,
+      image
+    })
     .then(project => {
       res.json(project);
     })
@@ -62,15 +105,27 @@ exports.editOne = (req, res, next) => {
 //* Delete One
 exports.deleteOne = (req, res, next) => {
   ProjectModel
-    .findByIdAndDelete({ _id: req.body.id })
+    .findByIdAndDelete({
+      _id: req.body.id
+    })
     .then(user => res.json(user))
     .catch(err => next(err));
 };
 
 //* Change Password
 exports.changePass = (req, res, next) => {
-  const { token, password } = req.body;
-  ProjectModel.findOneAndUpdate({ token }, { token: undefined, password })
-    .then(user => res.json({ success: true }))
+  const {
+    token,
+    password
+  } = req.body;
+  ProjectModel.findOneAndUpdate({
+      token
+    }, {
+      token: undefined,
+      password
+    })
+    .then(user => res.json({
+      success: true
+    }))
     .catch(err => next(err));
 };
