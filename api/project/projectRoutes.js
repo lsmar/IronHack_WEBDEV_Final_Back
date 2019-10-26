@@ -11,13 +11,13 @@ checkUser = function(role) {
 router.param("id", controller.paramId); 
 
 //* Get All
-router.get("/", controller.getAll);
+router.get("/", checkUser(),controller.getAll);
 
 //* Get teacher`s projects
 router.get("/my", checkUser(), controller.getMy);
 
 //* Create One
-router.post("/", controller.createOne);
+router.post("/",checkUser(), controller.createOne);
 
 //* Get One
 router.get("/:id", checkUser(), controller.getOne);
