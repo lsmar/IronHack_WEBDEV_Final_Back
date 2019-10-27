@@ -80,8 +80,8 @@ exports.editOne = (req, res, next) => {
 
 //* Delete One
 exports.deleteOne = (req, res, next) => {
-  const projectToEdit = req.project;
-  projectToEdit
+  const projectToDelete = req.project;
+  projectToDelete
     .delete()
     .then(project => {
       res.json(project);
