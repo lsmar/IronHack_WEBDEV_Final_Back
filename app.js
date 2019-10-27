@@ -53,6 +53,10 @@ app.use("/user", userRoutes);
 const projectRoutes = require("./api/project/projectRoutes");
 app.use("/project", projectRoutes);
 
+//* Student Routes
+const studentRoutes = require("./api/student/studentRoutes");
+app.use("/student", studentRoutes);
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
 });

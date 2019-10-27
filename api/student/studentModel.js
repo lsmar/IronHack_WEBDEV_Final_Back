@@ -6,9 +6,8 @@ const studentSchema = new mongoose.Schema({
     required: true
   },
   project: {
-    type: Schema.Types.ObjectId,
-    ref: "Project",
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Project"
   },
   image: {
     type: String,
@@ -16,9 +15,9 @@ const studentSchema = new mongoose.Schema({
     default: "url_bonequinho"
   },
   //* Série
-  class: {
+  classRoom: {
     type: String,
-      required: true
+    required: true
   },
   //* Turma
   grade: {
@@ -28,7 +27,8 @@ const studentSchema = new mongoose.Schema({
   classNumber: Number,
   institution: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Institution"
+    ref: "Institution",
+    required:true
   },
 }, {
   timestamps: true
