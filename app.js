@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cors = require('cors')
+const cors = require("cors");
 
 const app = express();
 
@@ -56,6 +56,12 @@ app.use("/project", projectRoutes);
 //* Student Routes
 const studentRoutes = require("./api/student/studentRoutes");
 app.use("/student", studentRoutes);
+
+//* Error response
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).json({ error: err });
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
