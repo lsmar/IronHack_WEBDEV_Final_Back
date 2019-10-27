@@ -14,7 +14,7 @@ router.param("id", controller.paramId);
 router.get("/me", checkUser(), controller.getMe);
 
 //* Change password
-router.post("/changePass", checkUser(), controller.changePass);
+router.post("/changePass", controller.changePass);
 
 //* Get All
 router.get("/", checkUser(), controller.getAll);
