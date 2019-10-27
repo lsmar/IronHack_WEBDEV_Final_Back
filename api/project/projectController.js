@@ -1,12 +1,12 @@
 const ProjectModel = require("./projectModel");
 const StudentModel = require("../student/studentModel");
-const UserModel = require("../user/userModel");
-
 
 exports.paramId = (req, res, next, id) => {
-  UserModel.findById(id)
-    .then(user => {
-      req.userEdit = user;
+  ProjectModel.findById(id)
+    .populate("teachers", "name")
+    .populate("students")
+    .then(project => {
+      req.project = project;
       next();
     })
     .catch(err => next(err));
@@ -15,12 +15,12 @@ exports.paramId = (req, res, next, id) => {
 //* Get teacher`s projects
 exports.getMy = (req, res, next) => {
   ProjectModel.find({
-      teachers: {
-        $in: req.user._id
-      }
-    })
-    .populate('teachers', 'name')
-    .populate('students')
+    teachers: {
+      $in: req.user._id
+    }
+  })
+    .populate("teachers", "name")
+    .populate("students")
     .then(projects => {
       res.json(projects);
     })
@@ -29,9 +29,9 @@ exports.getMy = (req, res, next) => {
 
 //* Get All projects
 exports.getAll = (req, res, next) => {
-  ProjectModel.find()
-    .populate('teachers', 'name')
-    .populate('students')
+  ProjectModel.find({ institution: res.user.institution })
+    .populate("teachers", "name")
+    .populate("students")
     .then(users => {
       res.json(users);
     })
@@ -40,67 +40,38 @@ exports.getAll = (req, res, next) => {
 
 //* Create One
 exports.createOne = (req, res, next) => {
-  const {
-    classRoom,
-    grade,
-    institution
-  } = req.body;
-  StudentModel
-  .find({$and : [ { classRoom : classRoom, grade:grade, institution:institution }]})
-  .then(studentsList => {
-  const newProject = new ProjectModel({
-    name:req.body.name,
-    teachers:req.body.teachers,
-    description:req.body.description,
-    subjects:req.body.subjects,
-    image:req.body.image,
-    students: studentsList
-  });
-  newProject
-    .save()
-    .then(project => {
-      res.json(project);
+  const { classRoom, grade, institution } = req.body;
+  StudentModel.find({ $and: [{ classRoom: classRoom, grade: grade, institution: institution }] })
+    .select("_id")
+    .then(studentsList => {
+      const newProject = new ProjectModel({
+        name: req.body.name,
+        teachers: req.body.teachers,
+        description: req.body.description,
+        subjects: req.body.subjects,
+        image: req.body.image,
+        students: studentsList
+      });
+      newProject
+        .save()
+        .then(project => {
+          res.json(project);
+        })
+        .catch(err => next(err));
     })
     .catch(err => next(err));
-  })
-  .catch(err => next(err));
 };
 
 //* Get One
 exports.getOne = (req, res, next) => {
-  ProjectModel
-    .findById({
-      _id: req.body.id
-    })
-    .populate('teachers', 'name')
-    .populate('students')
-    .then(project => {
-      res.json(project);
-    })
-    .catch(err => next(err));
+  res.json(req.project);
 };
 
 //* Edit One
 exports.editOne = (req, res, next) => {
-  const {
-    name,
-    teachers,
-    students,
-    description,
-    subjects,
-    image
-  } = req.body;
-  ProjectModel
-    .findByIdAndUpdate({
-      _id: req.body.id
-    }, {
-      name,
-      teachers,
-      students,
-      description,
-      subjects,
-      image
-    })
+  const projectToEdit = req.project;
+  projectToEdit
+    .update(req.body)
     .then(project => {
       res.json(project);
     })
@@ -109,28 +80,11 @@ exports.editOne = (req, res, next) => {
 
 //* Delete One
 exports.deleteOne = (req, res, next) => {
-  ProjectModel
-    .findByIdAndDelete({
-      _id: req.body.id
+  const projectToEdit = req.project;
+  projectToEdit
+    .delete()
+    .then(project => {
+      res.json(project);
     })
-    .then(user => res.json(user))
     .catch(err => next(err));
 };
-
-//* Change Password
-// exports.changePass = (req, res, next) => {
-//   const {
-//     token,
-//     password
-//   } = req.body;
-//   ProjectModel.findOneAndUpdate({
-//       token
-//     }, {
-//       token: undefined,
-//       password
-//     })
-//     .then(user => res.json({
-//       success: true
-//     }))
-//     .catch(err => next(err));
-// };

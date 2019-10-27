@@ -16,12 +16,12 @@ const projectSchema = new mongoose.Schema({
         ref     : 'Student',
       }],
       description: String,
-      subjects: {
-        type: [String],
+      subjects: [{
+        type: String,
         //Linguagens Matemática Ciências da Natureza Ciências Humanas e Sociais Aplicadas
         enum: ['linguagens', 'math', 'natureza', 'humanas'],
         required: true
-      },
+      }],
       image: {
         type: String,
         //TODO: definir imagem default
