@@ -29,7 +29,7 @@ exports.getMy = (req, res, next) => {
 
 //* Get All projects
 exports.getAll = (req, res, next) => {
-  ProjectModel.find({ institution: res.user.institution })
+  ProjectModel.find({ institution: req.user.institution })
     .populate("teachers", "name")
     .populate("students")
     .then(users => {
