@@ -1,7 +1,10 @@
 const ProjectModel = require("./projectModel");
+const StudentModel = require("../student/studentModel");
+const UserModel = require("../user/userModel");
+
 
 exports.paramId = (req, res, next, id) => {
-  ProjectModel.findById(id)
+  UserModel.findById(id)
     .then(user => {
       req.userEdit = user;
       next();
@@ -38,20 +41,20 @@ exports.getAll = (req, res, next) => {
 //* Create One
 exports.createOne = (req, res, next) => {
   const {
-    name,
-    teachers,
-    students,
-    description,
-    subjects,
-    image
+    classRoom,
+    grade,
+    institution
   } = req.body;
+  StudentModel
+  .find({$and : [ { classRoom : classRoom, grade:grade, institution:institution }]})
+  .then(studentsList => {
   const newProject = new ProjectModel({
-    name,
-    teachers,
-    students,
-    description,
-    subjects,
-    image
+    name:req.body.name,
+    teachers:req.body.teachers,
+    description:req.body.description,
+    subjects:req.body.subjects,
+    image:req.body.image,
+    students: studentsList
   });
   newProject
     .save()
@@ -59,6 +62,8 @@ exports.createOne = (req, res, next) => {
       res.json(project);
     })
     .catch(err => next(err));
+  })
+  .catch(err => next(err));
 };
 
 //* Get One
@@ -113,19 +118,19 @@ exports.deleteOne = (req, res, next) => {
 };
 
 //* Change Password
-exports.changePass = (req, res, next) => {
-  const {
-    token,
-    password
-  } = req.body;
-  ProjectModel.findOneAndUpdate({
-      token
-    }, {
-      token: undefined,
-      password
-    })
-    .then(user => res.json({
-      success: true
-    }))
-    .catch(err => next(err));
-};
+// exports.changePass = (req, res, next) => {
+//   const {
+//     token,
+//     password
+//   } = req.body;
+//   ProjectModel.findOneAndUpdate({
+//       token
+//     }, {
+//       token: undefined,
+//       password
+//     })
+//     .then(user => res.json({
+//       success: true
+//     }))
+//     .catch(err => next(err));
+// };
