@@ -27,7 +27,7 @@ exports.getAll = (req, res, next) => {
     .catch(err => next(err));
 };
 
-//* Create One 
+//* Create One
 exports.createOne = (req, res, next) => {
   const { name, email, role } = req.body;
   const { institution } = req.user;
@@ -67,8 +67,13 @@ exports.deleteOne = (req, res, next) => {
 //* Change Password
 exports.changePass = (req, res, next) => {
   const { token, password } = req.body;
-  UserModel.findOneAndUpdate({ token }, { token: undefined, password })
-    .then(user => res.json({ success: true }))
+  UserModel.findOne({ token })
+    .then(user =>
+      user
+        .update({ token: undefined, password })
+        .then(result => res.json({ success: true }))
+        .catch(err => next(err))
+    )
     .catch(err => next(err));
 };
 
