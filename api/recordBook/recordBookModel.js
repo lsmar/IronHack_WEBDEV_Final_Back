@@ -33,4 +33,6 @@ const recordBookSchema = new mongoose.Schema(
   }
 );
 
+recordBookSchema.index({ project: 1, date: 1, student: 1 }, { unique: true });
+
 module.exports = mongoose.model("RecordBook", recordBookSchema);

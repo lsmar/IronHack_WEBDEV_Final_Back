@@ -55,8 +55,11 @@ exports.createAll = (req, res, next) => {
   ProjectModel.findById(project)
     .then(project => {
       const { students } = project;
-      const allDocsToInsert = students.map(el => ({ student: el, institution, project, date, presence: true }));
-      res, json(allDocsToInsert);
+      const dateNew = new Date(date);
+      const allDocsToInsert = students.map(el => ({ student: el, institution, project: project._id, date: dateNew, presence: true }));
+      RecordBookModel.create(allDocsToInsert)
+        .then(result => res.json(result))
+        .catch(err => next(err));
     })
     .catch(err => next(err));
 };
