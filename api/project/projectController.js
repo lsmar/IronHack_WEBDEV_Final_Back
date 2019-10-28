@@ -41,7 +41,8 @@ exports.getAll = (req, res, next) => {
 //* Create One
 exports.createOne = (req, res, next) => {
   const { classRoom, grade } = req.body;
-  StudentModel.find({ classRoom: classRoom, grade: grade, institution: req.user.institution })
+  const { institution } = req.user;
+  StudentModel.find({ classRoom: classRoom, grade: grade, institution })
     .select("_id")
     .then(studentsList => {
       const newProject = new ProjectModel({
@@ -50,7 +51,8 @@ exports.createOne = (req, res, next) => {
         description: req.body.description,
         subjects: req.body.subjects,
         image: req.body.image,
-        students: studentsList
+        students: studentsList,
+        institution
       });
       newProject
         .save()
