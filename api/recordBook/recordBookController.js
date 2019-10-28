@@ -9,10 +9,6 @@ exports.paramId = (req, res, next, id) => {
     })
     .catch(err => next(err));
 };
-exports.paramProjectDate = (req, res, next, date) => {
-  req.date = date;
-  next();
-};
 exports.paramIdProject = (req, res, next, idProject) => {
   const project = isProject;
   const query = { project, institution: req.user.institution };
@@ -26,9 +22,20 @@ exports.paramIdProject = (req, res, next, idProject) => {
     })
     .catch(err => next(err));
 };
+exports.paramIdStudent = (req, res, next, idStudent) => {
+  const project = req.projectId;
+  const student = idStudent;
+  RecordBookModel.find({ project, student })
+    .then(records => {
+      req.records = records;
+      next();
+    })
+    .catch(err => next(err));
+  next();
+};
 
 //* Get All from one project with or without date
-exports.getAllFromProject = (req, res, next) => {
+exports.getAllFromProjectOrFromStudent = (req, res, next) => {
   res.json(req.records);
 };
 

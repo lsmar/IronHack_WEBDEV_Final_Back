@@ -9,14 +9,25 @@ checkUser = function(role) {
 
 //* Get id from routes
 router.param("id", controller.paramId);
-router.param("date", controller.paramProjectDate);
+router.param("date", (req, res, next, date) => {
+  req.date = date;
+  next();
+});
+router.param("idStudent", controller.paramIdStudent);
+router.param("projectId", (req, res, next, projectId) => {
+  req.projectId = projectId;
+  next();
+});
 router.param("idProject", controller.paramIdProject);
 
 //* Get All from my institution
 router.get("/", checkUser(), controller.getAll);
 
 //* Get All from one project with or without date
-router.get("/project/:idProject/:date?", checkUser(), controller.getAllFromProject);
+router.get("/project/:idProject/:date?", checkUser(), controller.getAllFromProjectOrFromStudent);
+
+//* Get All from one student with or without project
+router.get("/project/:idStudent/:projectId?", checkUser(), controller.getAllFromProjectOrFromStudent);
 
 //* Create All for students in that project in a day
 router.post("/all", checkUser(), controller.createAll);
