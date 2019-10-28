@@ -28,6 +28,7 @@ exports.getAllFromProjectOrFromStudent = (req, res, next) => {
     query.student = req.idStudent;
   }
   RecordBookModel.find(query)
+    .populate("student")
     .then(records => {
       res.json(records);
     })
