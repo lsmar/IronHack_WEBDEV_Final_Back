@@ -4,27 +4,29 @@ const recordBookSchema = new mongoose.Schema(
   {
     project: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
       required: true
     },
-    students: {
+    student: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
       required: true
     },
-    description: String,
+    institution: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Institution",
+      required: true
+    },
+    date: { type: Date, required: true },
+    observation: String,
+    presence: { type: Boolean, required: true },
     tags: [
       {
         type: String,
-        //TODO: definir as tags padronizadas
         enum: ["opcaoA", "opcaoB"],
         required: true
       }
-    ],
-
-    image: {
-      type: String,
-      //TODO: definir imagem default
-      default: "url_bonequinho"
-    }
+    ]
   },
   {
     timestamps: true
