@@ -32,8 +32,8 @@ router.get("/", checkUser(), controller.getAll);
 //* Get All from one project with or without date
 router.get("/project/:idProject/:date?", checkUser(), controller.getAllFromProjectOrFromStudent);
 
-//* Get All from one student with or without project
-router.get("/stundet/:idStudent/:projectId?", checkUser(), controller.getAllFromProjectOrFromStudent);
+//* Get All from one student with or without project and with or without date
+router.get("/student/:idStudent/:idProject?/:date?", checkUser(), controller.getAllFromProjectOrFromStudent);
 
 //* Create All for students in that project in a day
 router.post("/all", checkUser(), controller.createAll);
