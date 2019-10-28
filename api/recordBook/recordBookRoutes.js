@@ -13,12 +13,18 @@ router.param("date", (req, res, next, date) => {
   req.date = date;
   next();
 });
-router.param("idStudent", controller.paramIdStudent);
+router.param("idStudent", (req, res, next, idStudent) => {
+  req.idStudent = idStudent;
+  next();
+});
 router.param("projectId", (req, res, next, projectId) => {
   req.projectId = projectId;
   next();
 });
-router.param("idProject", controller.paramIdProject);
+router.param("idProject", (req, res, next, idProject) => {
+  req.idProject = idProject;
+  next();
+});
 
 //* Get All from my institution
 router.get("/", checkUser(), controller.getAll);
@@ -27,7 +33,7 @@ router.get("/", checkUser(), controller.getAll);
 router.get("/project/:idProject/:date?", checkUser(), controller.getAllFromProjectOrFromStudent);
 
 //* Get All from one student with or without project
-router.get("/project/:idStudent/:projectId?", checkUser(), controller.getAllFromProjectOrFromStudent);
+router.get("/stundet/:idStudent/:projectId?", checkUser(), controller.getAllFromProjectOrFromStudent);
 
 //* Create All for students in that project in a day
 router.post("/all", checkUser(), controller.createAll);
