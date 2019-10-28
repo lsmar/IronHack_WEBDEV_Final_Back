@@ -68,12 +68,14 @@ exports.deleteOne = (req, res, next) => {
 exports.changePass = (req, res, next) => {
   const { token, password } = req.body;
   UserModel.findOne({ token })
-    .then(user =>
+    .then(user => {
+      user.token = undefined;
+      user.password = password;
       user
-        .update({ token: undefined, password })
+        .save()
         .then(result => res.json({ success: true }))
-        .catch(err => next(err))
-    )
+        .catch(err => next(err));
+    })
     .catch(err => next(err));
 };
 
