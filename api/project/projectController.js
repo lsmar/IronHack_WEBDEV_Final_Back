@@ -40,7 +40,7 @@ exports.getAll = (req, res, next) => {
 
 //* Create One
 exports.createOne = (req, res, next) => {
-  const { classRoom, grade} = req.body;
+  const { classRoom, grade } = req.body;
   StudentModel.find({ $and: [{ classRoom: classRoom, grade: grade, institution: req.user.institution }] })
     .select("_id")
     .then(studentsList => {

@@ -57,6 +57,10 @@ app.use("/project", projectRoutes);
 const studentRoutes = require("./api/student/studentRoutes");
 app.use("/student", studentRoutes);
 
+//* RecordBook Routes
+const RecordBookRoutes = require("./api/recordBook/recordBookRoutes");
+app.use("/record", RecordBookRoutes);
+
 //* Error response
 app.use(function(err, req, res, next) {
   console.error(err.stack);

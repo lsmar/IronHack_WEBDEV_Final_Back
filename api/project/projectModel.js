@@ -1,32 +1,45 @@
 const mongoose = require("mongoose");
 
-const projectSchema = new mongoose.Schema({
-      name: {
-        type: String,
-        required: true,
-        unique: true
-      },
-      teachers: [{
+const projectSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    teachers: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref     : 'User',
+        ref: "User",
         required: true
-      }],
-      students: [{
+      }
+    ],
+    institution: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Institution",
+      required: true
+    },
+
+    students: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref     : 'Student',
-      }],
-      description: String,
-      subjects: [{
+        ref: "Student"
+      }
+    ],
+    description: String,
+    subjects: [
+      {
         type: String,
         //Linguagens Matemática Ciências da Natureza Ciências Humanas e Sociais Aplicadas
-        enum: ['linguagens', 'math', 'natureza', 'humanas'],
+        enum: ["linguagens", "math", "natureza", "humanas"],
         required: true
-      }],
-      image: {
-        type: String,
-        //TODO: definir imagem default
-        default: "url_bonequinho"
-      },
+      }
+    ],
+    image: {
+      type: String,
+      //TODO: definir imagem default
+      default: "url_bonequinho"
+    }
   },
   {
     timestamps: true
