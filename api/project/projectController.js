@@ -12,6 +12,14 @@ exports.paramId = (req, res, next, id) => {
     .catch(err => next(err));
 };
 
+exports.checkIfFromThisInstitution = (req, res, next) => {
+  if (req.user.institution === req.project.institution) {
+    next();
+  } else {
+    next(new Error("This project is not from your institution."));
+  }
+};
+
 //* Get teacher`s projects
 exports.getMy = (req, res, next) => {
   ProjectModel.find({

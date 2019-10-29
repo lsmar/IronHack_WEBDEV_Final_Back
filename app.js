@@ -64,7 +64,7 @@ app.use("/record", RecordBookRoutes);
 //* Error response
 app.use(function(err, req, res, next) {
   console.error(err.stack);
-  res.status(500).json({ error: err });
+  res.status(500).json({ error: err.message });
 });
 
 app.listen(process.env.PORT, () => {
