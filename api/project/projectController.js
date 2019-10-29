@@ -13,7 +13,7 @@ exports.paramId = (req, res, next, id) => {
 };
 
 exports.checkIfFromThisInstitution = (req, res, next) => {
-  if (req.user.institution === req.project.institution) {
+  if (req.user.institution.toString() === req.project.institution.toString()) {
     next();
   } else {
     next(new Error("This project is not from your institution."));
