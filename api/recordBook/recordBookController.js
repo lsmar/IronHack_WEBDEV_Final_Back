@@ -39,7 +39,7 @@ exports.getAllFromProjectOrFromStudent = (req, res, next) => {
 
 //* Get getDatesFromProject
 exports.getDatesFromProject = (req, res, next) => {
-  const query = [{ $match: { project: mongoose.Types.ObjectId(req.idProject) } }, { $group: { _id: "$date" } }, { $sort: { _id: 1 } }];
+  const query = [{ $match: { project: mongoose.Types.ObjectId(req.idProject) } }, { $group: { _id: "$date" } }, { $sort: { _id: -1 } }];
   RecordBookModel.aggregate(query)
     .then(records => {
       res.json(records.map(el => ({ date: el._id.toISOString().slice(0, el._id.toISOString().indexOf("T")) })));
