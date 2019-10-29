@@ -23,9 +23,7 @@ exports.checkIfFromThisInstitution = (req, res, next) => {
 //* Get teacher`s projects
 exports.getMy = (req, res, next) => {
   ProjectModel.find({
-    teachers: {
-      $in: req.user._id
-    }
+    teachers: req.user._id
   })
     .populate("teachers", "name")
     .populate("students")
@@ -50,6 +48,7 @@ exports.getAll = (req, res, next) => {
 exports.createOne = (req, res, next) => {
   const { classRoom, grade } = req.body;
   const { institution } = req.user;
+  const image = typeof req.file != "undefined" ? req.file.url : "";
   StudentModel.find({ classRoom: classRoom, grade: grade, institution })
     .select("_id")
     .then(studentsList => {
@@ -58,7 +57,7 @@ exports.createOne = (req, res, next) => {
         teachers: req.body.teachers,
         description: req.body.description,
         subjects: req.body.subjects,
-        image: req.body.image,
+        image,
         students: studentsList,
         institution
       });
