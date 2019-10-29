@@ -1,5 +1,6 @@
 const RecordBookModel = require("./recordBookModel");
 const ProjectModel = require("../project/projectModel");
+const mongoose = require("mongoose");
 
 exports.paramId = (req, res, next, id) => {
   RecordBookModel.findById(id)
@@ -31,6 +32,16 @@ exports.getAllFromProjectOrFromStudent = (req, res, next) => {
     .populate("student")
     .then(records => {
       res.json(records);
+    })
+    .catch(err => next(err));
+};
+
+//* Get getDatesFromProject
+exports.getDatesFromProject = (req, res, next) => {
+  const query = [{ $match: { project: mongoose.Types.ObjectId(req.idProject) } }, { $group: { _id: "$date" } }];
+  RecordBookModel.aggregate(query)
+    .then(records => {
+      res.json(records.map(el => ({ date: el._id.toISOString().slice(0, el._id.toISOString().indexOf("T")) })));
     })
     .catch(err => next(err));
 };
