@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 exports.paramId = (req, res, next, id) => {
   RecordBookModel.findById(id)
+    .populate("student")
     .then(record => {
       req.record = record;
       next();
