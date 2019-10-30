@@ -47,16 +47,18 @@ exports.getAllFromAProjectReview = (req, res, next) => {
       if (records.length == 0) return res.json({ error: "No record for this student in the project!" });
       result.absences = records.filter(el => !el.presence).length;
       result.totalDays = records.length;
-      result.student = records[0].student;
+
       const present = records.filter(el => el.presence);
       const tagsToCalc = present.filter(el => el.tags.length != 0);
       result.noReview = result.totalDays - tagsToCalc.length - result.absences;
+      result.tags = {};
       const allTags = tagsToCalc.map(el => el.tags);
       for (let idx = 0; idx < allTags[0].length; idx += 1) {
         const key = allTags[0][idx].tagName;
         const filteredTags = allTags.filter(el => el[idx].value);
         result.tags[key] = filteredTags.length;
       }
+      result.student = records[0].student;
       res.json(result);
     })
     .catch(err => next(err));
