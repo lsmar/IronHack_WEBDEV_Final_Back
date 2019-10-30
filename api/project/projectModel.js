@@ -38,7 +38,7 @@ const projectSchema = new mongoose.Schema(
     image: {
       type: String,
       //TODO: definir imagem default
-      default: "url_bonequinho"
+      default: "https://res.cloudinary.com/lsm/image/upload/v1572397545/lynx-project/project-default-icon.png.png"
     }
   },
   {
