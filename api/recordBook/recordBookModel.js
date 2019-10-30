@@ -22,9 +22,8 @@ const recordBookSchema = new mongoose.Schema(
     presence: { type: Boolean, required: true },
     tags: [
       {
-        type: String,
-        enum: ["opcaoA", "opcaoB"],
-        required: true
+        tagName: { type: String, required: true },
+        value: { type: Boolean, required: true }
       }
     ]
   },
@@ -32,6 +31,16 @@ const recordBookSchema = new mongoose.Schema(
     timestamps: true
   }
 );
+/*
+Tags:
+conversation
+goodParticipation
+creativity
+comprehension
+teamWork
+ideasConnection
+noEngagement
+*/
 
 recordBookSchema.index({ project: 1, date: 1, student: 1 }, { unique: true });
 
