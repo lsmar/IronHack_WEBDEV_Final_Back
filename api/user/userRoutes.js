@@ -17,7 +17,9 @@ router.get("/me", checkUser(), controller.getMe);
 router.post("/changePass", controller.changePass);
 
 //* Get All
-router.get("/", checkUser(), controller.getAll);
+router.get("/", checkUser(), controller.getAll); 
+//* Get all Teacher
+router.get("/teacher", checkUser(), controller.getAllTeachers); 
 
 //* Create One
 router.post("/", checkUser(), controller.createOne);

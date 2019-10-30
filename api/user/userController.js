@@ -27,6 +27,16 @@ exports.getAll = (req, res, next) => {
     .catch(err => next(err));
 };
 
+//* Get All Teachers
+exports.getAllTeachers = (req, res, next) => {
+  UserModel.find({ role: "TEACHER", institution: req.user.institution })
+    .select({ password: 0 })
+    .then(users => {
+      res.json(users);
+    })
+    .catch(err => next(err));
+};
+
 //* Create One
 exports.createOne = (req, res, next) => {
   const { name, email, role } = req.body;
