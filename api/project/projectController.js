@@ -54,9 +54,9 @@ exports.createOne = (req, res, next) => {
     .then(studentsList => {
       const newProject = new ProjectModel({
         name: req.body.name,
-        teachers: req.body.teachers,
+        teachers: req.body.teachers.split(","),
         description: req.body.description,
-        subjects: req.body.subjects,
+        subjects: req.body.subjects.split(","),
         image,
         students: studentsList,
         institution

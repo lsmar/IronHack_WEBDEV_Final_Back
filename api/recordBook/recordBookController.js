@@ -37,6 +37,31 @@ exports.getAllFromProjectOrFromStudent = (req, res, next) => {
     .catch(err => next(err));
 };
 
+//* Get All from one Student in a project to make the review
+exports.getAllFromAProjectReview = (req, res, next) => {
+  const query = { institution: req.user.institution, project: req.idProject, student: req.idStudent };
+  RecordBookModel.find(query)
+    .populate("student")
+    .then(records => {
+      const result = {};
+      if (records.length == 0) return res.json({ error: "No record for this student in the project!" });
+      result.absences = records.filter(el => !el.presence).length;
+      result.totalDays = records.length;
+      result.student = records[0].student;
+      const present = records.filter(el => el.presence);
+      const tagsToCalc = present.filter(el => el.tags.length != 0);
+      result.noReview = result.totalDays - tagsToCalc.length - result.absences;
+      const allTags = tagsToCalc.map(el => el.tags);
+      for (let idx = 0; idx < allTags[0].length; idx += 1) {
+        const key = allTags[0][idx].tagName;
+        const filteredTags = allTags.filter(el => el[idx].value);
+        result.tags[key] = filteredTags.length;
+      }
+      res.json(result);
+    })
+    .catch(err => next(err));
+};
+
 //* Get getDatesFromProject
 exports.getDatesFromProject = (req, res, next) => {
   const query = [{ $match: { project: mongoose.Types.ObjectId(req.idProject) } }, { $group: { _id: "$date" } }, { $sort: { _id: -1 } }];

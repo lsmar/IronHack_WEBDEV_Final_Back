@@ -35,6 +35,9 @@ router.get("/project/:idProject/:date?", checkUser(), controller.getAllFromProje
 //* Get All from one student with or without project and with or without date
 router.get("/student/:idStudent/:idProject?/:date?", checkUser(), controller.getAllFromProjectOrFromStudent);
 
+//* Get All from one student in a project to make the review page
+router.get("/studentReview/:idStudent/:idProject", checkUser(), controller.getAllFromAProjectReview);
+
 //* Get All from one project with or without date
 router.get("/projectGetDates/:idProject", checkUser(), controller.getDatesFromProject);
 
