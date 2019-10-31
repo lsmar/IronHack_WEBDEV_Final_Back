@@ -23,7 +23,7 @@ exports.getAll = (req, res, next) => {
 //* Create One
 exports.createOne = (req, res, next) => {
   const { name, classRoom, grade} = req.body;
-  const newStudent = new StudentModel({ name, classRoom, grade, institution:req.user.insitution});
+  const newStudent = new StudentModel({ name, classRoom, grade, institution:req.user.institution});
   newStudent
     .save()
     .then(student => {
