@@ -22,8 +22,10 @@ exports.getAll = (req, res, next) => {
 
 //* Create One
 exports.createOne = (req, res, next) => {
-  const { name, classRoom, grade} = req.body;
-  const newStudent = new StudentModel({ name, classRoom, grade, institution:req.user.institution});
+  const { name, classRoom, grade } = req.body;
+  const image =
+    typeof req.file != "undefined" ? req.file.url : "https://res.cloudinary.com/lsm/image/upload/v1572448108/lynx-students/perfil-icon.png.png";
+  const newStudent = new StudentModel({ name, classRoom, grade, institution: req.user.institution, image });
   newStudent
     .save()
     .then(student => {
