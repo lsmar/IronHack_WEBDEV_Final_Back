@@ -48,7 +48,10 @@ exports.getAll = (req, res, next) => {
 exports.createOne = (req, res, next) => {
   const { classRoom, grade } = req.body;
   const { institution } = req.user;
-  const image = typeof req.file != "undefined" ? req.file.url : "";
+  const image =
+    typeof req.file != "undefined"
+      ? req.file.url
+      : "https://res.cloudinary.com/lsm/image/upload/v1572397545/lynx-project/project-default-icon.png.png";
   StudentModel.find({ classRoom: classRoom, grade: grade, institution })
     .select("_id")
     .then(studentsList => {
