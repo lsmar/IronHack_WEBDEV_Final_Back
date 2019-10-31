@@ -54,6 +54,7 @@ exports.verifyUser = () => (req, res, next) => {
   //* Email and password received
   //* Check if the user exist
   User.findOne({ email })
+    .populate('institution')
     .then(user => {
       if (!user) {
         //! User not found
