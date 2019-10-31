@@ -26,7 +26,7 @@ exports.getFreshUser = () => {
   //* The token is valid let's include the user data to req
   return (req, res, next) => {
     User.findById(req.user._id)
-      .populate("company")
+      .populate("institution")
       .then(
         user => {
           if (!user) {
@@ -54,7 +54,7 @@ exports.verifyUser = () => (req, res, next) => {
   //* Email and password received
   //* Check if the user exist
   User.findOne({ email })
-    .populate('institution')
+    .populate("institution")
     .then(user => {
       if (!user) {
         //! User not found

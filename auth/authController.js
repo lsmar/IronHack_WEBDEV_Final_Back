@@ -5,7 +5,8 @@ const nodemailer = require("nodemailer");
 
 exports.signin = (req, res, next) => {
   //* Check if the username and password are correct, if yes send the token
-  const token = signToken(req.user._id, req.user.username, req.user.name, req.user.thumbnail, req.user.role, req.user.institution.name);
+
+  const token = signToken(req.user._id, req.user.email, req.user.name, req.user.thumbnail, req.user.role, req.user.institution.name);
   res.json({ token });
 };
 
@@ -28,7 +29,7 @@ exports.signup = (req, res, next) => {
       User.save()
         .then(newUser => {
           const token = signToken(newUser._id, newUser.email, newUser.name, newUser.thumbnail, newUser.role, newUser.institution);
-          sendNewUserEmail({ name, email});
+          sendNewUserEmail({ name, email });
           res.json({ token });
         })
         .catch(err => next(err));
@@ -36,7 +37,7 @@ exports.signup = (req, res, next) => {
     .catch(err => next(err));
 };
 
-const sendNewUserEmail = ({email, name }) => {
+const sendNewUserEmail = ({ email, name }) => {
   let transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
