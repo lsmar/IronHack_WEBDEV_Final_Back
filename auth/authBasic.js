@@ -26,21 +26,20 @@ exports.getFreshUser = () => {
   //* The token is valid let's include the user data to req
   return (req, res, next) => {
     User.findById(req.user._id)
-      .populate("institution")
-      .then(
-        user => {
-          if (!user) {
-            res.status(401).json({
-              error: "Unauthorized User, userId: " + req.user._id
-            });
-          } else {
-            req.user = user;
-            next();
-          }
-        },
-        //! Erro interno no servidor
-        err => next(err)
-      );
+    .then(
+      user => {
+        if (!user) {
+          res.status(401).json({
+            error: "Unauthorized User, userId: " + req.user._id
+          });
+        } else {
+          req.user = user;
+          next();
+        }
+      },
+      //! Erro interno no servidor
+      err => next(err)
+    );
   };
 };
 
