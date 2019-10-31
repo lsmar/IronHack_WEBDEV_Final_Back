@@ -5,7 +5,6 @@ const nodemailer = require("nodemailer");
 
 exports.paramId = (req, res, next, id) => {
   UserModel.findById(id)
-    .populate('institution')
     .select({ password: 0 })
     .then(user => {
       req.userEdit = user;
