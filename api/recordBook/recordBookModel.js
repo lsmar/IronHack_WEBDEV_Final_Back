@@ -18,7 +18,7 @@ const recordBookSchema = new mongoose.Schema(
       required: true
     },
     date: { type: Date, required: true },
-    observation: String,
+    obs: String,
     presence: { type: Boolean, required: true },
     tags: [
       {
