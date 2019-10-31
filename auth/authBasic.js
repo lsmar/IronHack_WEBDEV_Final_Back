@@ -87,7 +87,7 @@ const createJWT = (_id, email, name, thumbnail, role, institution) => {
       email,
       institution,
       thumbnail,
-      role
+      role,
     },
     process.env.SECRET_JWT,
     { expiresIn: 24 * 60 * 60 } //* One day in minutes
@@ -97,6 +97,6 @@ const createJWT = (_id, email, name, thumbnail, role, institution) => {
 exports.signToken = createJWT;
 
 exports.getNewJwt = (req, res, next) => {
-  req.jwtToken = createJWT(req.user._id, req.user.name, req.user.email, req.user.thumbnail, req.user.role);
+  req.jwtToken = createJWT(req.user._id, req.user.name, req.user.email, req.user.thumbnail, req.user.role, req.user.institution.name);
   next();
 };

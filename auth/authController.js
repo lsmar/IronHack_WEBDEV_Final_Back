@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 
 exports.signin = (req, res, next) => {
   //* Check if the username and password are correct, if yes send the token
-  const token = signToken(req.user._id, req.user.username, req.user.name, req.user.thumbnail, req.user.role);
+  const token = signToken(req.user._id, req.user.username, req.user.name, req.user.thumbnail, req.user.role, req.user.institution.name);
   res.json({ token });
 };
 
