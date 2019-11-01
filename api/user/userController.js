@@ -41,8 +41,8 @@ exports.getAllTeachers = (req, res, next) => {
 exports.createOne = (req, res, next) => {
   const { name, email, role } = req.body;
   const { institution } = req.user;
-  const token = base64.encode(JSON.stringify({ name, email: email.lowerCase(), token: randomString.generate(15) }));
-  const newUser = new UserModel({ name, email: email.lowerCase(), role, institution, token });
+  const token = base64.encode(JSON.stringify({ name, email: email.toLowerCase(), token: randomString.generate(15) }));
+  const newUser = new UserModel({ name, email: email.toLowerCase(), role, institution, token });
   newUser
     .save()
     .then(user => {

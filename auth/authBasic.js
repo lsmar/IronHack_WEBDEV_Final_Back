@@ -52,7 +52,7 @@ exports.verifyUser = () => (req, res, next) => {
   }
   //* Email and password received
   //* Check if the user exist
-  User.findOne({ email: email.lowerCase() })
+  User.findOne({ email: email.toLowerCase() })
     .populate("institution")
     .then(user => {
       if (!user) {
