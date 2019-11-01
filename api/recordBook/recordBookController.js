@@ -47,6 +47,7 @@ exports.getAllFromAProjectReview = (req, res, next) => {
       const result = {};
       if (records.length == 0) return res.json({ error: "No record for this student in the project!" });
       result.absences = records.filter(el => !el.presence).length;
+      if (records.filter(el => el.presence) == 0) return res.json({ error: "No record for this student in the project!" });
       result.totalDays = records.length;
 
       const present = records.filter(el => el.presence);
