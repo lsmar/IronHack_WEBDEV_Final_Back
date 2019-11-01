@@ -25,8 +25,7 @@ exports.decodeToken = () => {
 exports.getFreshUser = () => {
   //* The token is valid let's include the user data to req
   return (req, res, next) => {
-    User.findById(req.user._id)
-    .then(
+    User.findById(req.user._id).then(
       user => {
         if (!user) {
           res.status(401).json({
@@ -45,6 +44,7 @@ exports.getFreshUser = () => {
 
 exports.verifyUser = () => (req, res, next) => {
   const { email, password } = req.body;
+
   //* Check if receive email and password
   if (!email || !password) {
     res.status(400).json({ error: "You need a email and password." });
@@ -52,7 +52,7 @@ exports.verifyUser = () => (req, res, next) => {
   }
   //* Email and password received
   //* Check if the user exist
-  User.findOne({ email })
+  User.findOne({ email: email.lowerCase() })
     .populate("institution")
     .then(user => {
       if (!user) {
